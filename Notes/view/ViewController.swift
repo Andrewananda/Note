@@ -15,28 +15,26 @@ class ViewController: UIViewController {
     private var noteViewModel = NoteViewModel()
     
     let bag = DisposeBag()
-    private let notes = BehaviorRelay<[Note]>(value: [])
                                                                                                  
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        noteViewModel.getAllNotes()
         getNotes()
-        //getAllNotes()
-        
-        notes.subscribe(onNext: { [weak self] elements in
-            self?.updateNotes(note: elements)
-        }).disposed(by: bag)
     }
 
     private func getNotes() {
-        let notesVm = noteViewModel
-        notesVm.noteObservable.subscribe(onNext: { [weak self] element in
-            self?.updateNotes(note: [element])
-            print(element)
+        noteViewModel.noteSubject.subscribe(onNext: { element in
+            print("element \(element)")
             }, onDisposed: {
                 print("Disposed")
         })
         .disposed(by: bag)
+        
+    }
+    
+    func getAllNotesCount() {
+        print("Number of items \(noteViewModel.numberOfItems())")
     }
 
     private func updateNotes(note: [Note]) {
@@ -47,5 +45,6 @@ class ViewController: UIViewController {
         let notes = noteViewModel
         notes.getAllNotes()
     }
+    
 }
 

@@ -9,31 +9,44 @@
 import Foundation
 import RealmSwift
 import RxSwift
+import RxRelay
 
 class NoteViewModel {
     
     //observable sequence
-    private let noteSubject = PublishSubject<Note>()
-    var noteObservable : Observable<Note>  {
-        return noteSubject.asObservable()
-    }
+    var noteSubject = BehaviorRelay<[Note]>(value: [])
+        
     
+    let realm  = try! Realm()
+    var notesList: [Note] = []
+    
+        
     func addNote(title: String, description: String) {
         let note = Note()
         note.title = title
         note.desc = description
         
-        let realm  = try! Realm()
         try! realm.write{
             realm.add(note)
-            noteSubject.onNext(note)
         }
     }
     
-    func getAllNotes() {
-        let realm = try! Realm()
+    func numberOfItems() -> Int {
+        return notesList.count
+    }
+    
+    
+    func getAllNotes(){
         
         let notes = realm.objects(Note.self)
-        print("Notes \(notes)")
+        for note in notes {
+            notesList.append(note)
+        }
+        noteSubject.accept(notesList)
+
+    }
+    
+    func deleteAllNotes() {
+        realm.deleteAll()
     }
 }
