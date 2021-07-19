@@ -62,6 +62,9 @@
                                     </textField>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="aqX-vm-g0g">
                                         <rect key="frame" x="0.0" y="58" width="394" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="PKr-8B-0jB"/>
+                                        </constraints>
                                     </activityIndicatorView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Lorem " translatesAutoresizingMaskIntoConstraints="NO" id="Wps-eg-3Ic">
                                         <rect key="frame" x="0.0" y="86" width="394" height="669"/>
@@ -71,6 +74,12 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="aqX-vm-g0g" firstAttribute="leading" secondItem="VQQ-Ry-eVS" secondAttribute="leading" id="4JJ-lx-u1I"/>
+                                    <constraint firstAttribute="trailing" secondItem="aqX-vm-g0g" secondAttribute="trailing" id="WfP-Cb-dJq"/>
+                                    <constraint firstItem="Wps-eg-3Ic" firstAttribute="top" secondItem="aqX-vm-g0g" secondAttribute="bottom" constant="8" symbolic="YES" id="ete-P8-5lT"/>
+                                    <constraint firstItem="aqX-vm-g0g" firstAttribute="top" secondItem="rJJ-X5-QlN" secondAttribute="bottom" constant="8" symbolic="YES" id="g6r-FD-1fX"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ofx-hs-zMT"/>
@@ -99,6 +108,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="descriptionLabel" destination="Wps-eg-3Ic" id="4ik-H6-ALP"/>
+                        <outlet property="loader" destination="aqX-vm-g0g" id="pdx-lU-qGa"/>
                         <outlet property="titleLabel" destination="rJJ-X5-QlN" id="2Ol-xO-5qf"/>
                     </connections>
                 </viewController>
