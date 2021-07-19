@@ -15,8 +15,7 @@ class NoteViewModel {
     
     //observable sequence
     var noteSubject = BehaviorRelay<[Note]>(value: [])
-    
-        
+    var isCompleted = BehaviorRelay<Bool>(value: true)
     
     let realm  = try! Realm()
     var notesList: [Note] = []
@@ -31,6 +30,7 @@ class NoteViewModel {
             realm.add(note)
             notesList.append(note)
             getAllNotes()
+            isCompleted.accept(false)
         }
     }
     

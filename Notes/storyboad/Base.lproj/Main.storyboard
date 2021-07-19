@@ -60,8 +60,11 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="aqX-vm-g0g">
+                                        <rect key="frame" x="0.0" y="58" width="394" height="20"/>
+                                    </activityIndicatorView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Lorem " translatesAutoresizingMaskIntoConstraints="NO" id="Wps-eg-3Ic">
-                                        <rect key="frame" x="0.0" y="58" width="394" height="697"/>
+                                        <rect key="frame" x="0.0" y="86" width="394" height="669"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <color key="textColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>

@@ -8,6 +8,7 @@
 
 import UIKit
 import RxCocoa
+import RxSwift
 
 class AddNoteViewController: UIViewController, UITextViewDelegate {
 
@@ -15,6 +16,7 @@ class AddNoteViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var descriptionLabel: UITextView!
     
     private let viewModel = NoteViewModel()
+    fileprivate let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +35,10 @@ class AddNoteViewController: UIViewController, UITextViewDelegate {
         } else if description.isEmpty {
             print("Description is required")
         } else {
+            viewModel.isCompleted.subscribe(onNext: {res in
+                print("CompletedStatus \(res)")
+            }).disposed(by: bag)
+            
             viewModel.addNote(title: title, description: description)
         }
     }
