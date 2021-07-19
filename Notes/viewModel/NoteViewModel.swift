@@ -15,6 +15,7 @@ class NoteViewModel {
     
     //observable sequence
     var noteSubject = BehaviorRelay<[Note]>(value: [])
+    
         
     
     let realm  = try! Realm()
@@ -42,9 +43,17 @@ class NoteViewModel {
         
         let notes = realm.objects(Note.self)
         let encoder = JSONEncoder()
-        try! encoder.encode(notes)
-        
-        print("\(notes)")
+        encoder.outputFormatting = .prettyPrinted
+        let data = try! encoder.encode(notes)
+    
+        do {
+            let decoder = JSONDecoder()
+            decoder.dataDecodingStrategy = .base64
+            let note = try decoder.decode([Note].self, from: data)
+            print("Notes \(note)")
+        }catch(let error) {
+            print("Unable to decode \(error)")
+        }
     }
     
     private func setNotes(notes: [Note]) {
