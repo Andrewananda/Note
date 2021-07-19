@@ -9,7 +9,7 @@
 import UIKit
 import RxCocoa
 
-class AddNoteViewController: UIViewController {
+class AddNoteViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var titleLabel: UITextField!
     @IBOutlet weak var descriptionLabel: UITextView!
@@ -19,13 +19,25 @@ class AddNoteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        descriptionLabel.delegate = self
+        descriptionLabel.text = "Add Notes"
     }
 
     @IBAction func saveNote(_ sender: UIButton) {
-        if let title = titleLabel.text, let description = descriptionLabel.text {
-            //observer sequence
+        validateInputs(title: titleLabel.text!, description: descriptionLabel.text)
+    }
+    
+    func validateInputs(title: String, description: String) {
+        if title.isEmpty {
+            print("Title is required")
+        } else if description.isEmpty {
+            print("Description is required")
+        } else {
             viewModel.addNote(title: title, description: description)
         }
     }
     
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        self.descriptionLabel.text = nil
+    }
 }

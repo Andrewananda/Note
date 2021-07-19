@@ -28,6 +28,8 @@ class NoteViewModel {
         
         try! realm.write{
             realm.add(note)
+            notesList.append(note)
+            getAllNotes()
         }
     }
     
@@ -39,14 +41,20 @@ class NoteViewModel {
     func getAllNotes(){
         
         let notes = realm.objects(Note.self)
-        for note in notes {
-            notesList.append(note)
-        }
-        noteSubject.accept(notesList)
-
+        let encoder = JSONEncoder()
+        try! encoder.encode(notes)
+        
+        print("\(notes)")
+    }
+    
+    private func setNotes(notes: [Note]) {
+        print("Notes \(notes)")
+        noteSubject.accept(notes)
     }
     
     func deleteAllNotes() {
-        realm.deleteAll()
+        try! realm.write {
+            realm.deleteAll()
+        }
     }
 }

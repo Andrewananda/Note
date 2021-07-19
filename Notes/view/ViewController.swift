@@ -12,6 +12,8 @@ import RxSwift
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var tableView: UITableView!
+    
     private var noteViewModel = NoteViewModel()
     
     let bag = DisposeBag()
@@ -19,28 +21,31 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        //noteViewModel.deleteAllNotes()
         noteViewModel.getAllNotes()
-        getNotes()
-    }
-
-    private func getNotes() {
-        noteViewModel.noteSubject.subscribe(onNext: { element in
-            print("element \(element)")
-            }, onDisposed: {
-                print("Disposed")
-        })
-        .disposed(by: bag)
         
+        tableView.rx.setDelegate(self).disposed(by: bag)
+        
+        bindTableView()
+    }
+    
+    private func bindTableView() {
+        tableView.register(UINib(nibName: "NoteTableCellTableViewCell", bundle: nil), forCellReuseIdentifier: "cellId")
+        
+        noteViewModel.noteSubject.bind(to: tableView.rx.items(cellIdentifier: "cellId", cellType: NoteTableCellTableViewCell.self)){(row,item,cell) in
+            cell.textLabel?.text = item.title
+        }.disposed(by: bag)
+        
+        tableView.rx.modelSelected(Note.self).subscribe(onNext: { item in
+            print("SelectedItem: \(item.title)")
+                }).disposed(by: bag)
+        noteViewModel.getAllNotes()
     }
     
     func getAllNotesCount() {
         print("Number of items \(noteViewModel.numberOfItems())")
     }
 
-    private func updateNotes(note: [Note]) {
-        print("UpdatedNotes \(note)")
-    }
-    
     func getAllNotes() {
         let notes = noteViewModel
         notes.getAllNotes()
@@ -48,3 +53,8 @@ class ViewController: UIViewController {
     
 }
 
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 50
+        }
+}

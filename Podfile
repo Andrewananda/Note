@@ -8,6 +8,6 @@ target 'Notes' do
   # Pods for Notes
 	pod 'RxSwift', '6.1.0'
 	pod 'RxCocoa', '6.1.0'
-	pod 'RealmSwift', '=10.1.4'
+	pod 'RealmSwift', '~> 10.1.4'
 
 end

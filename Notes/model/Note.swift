@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class Note: Object {
+class Note: Object, Codable {
     
     @objc dynamic var _id = ObjectId.generate()
     @objc dynamic var title = ""
