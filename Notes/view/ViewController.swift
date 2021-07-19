@@ -20,8 +20,7 @@ class ViewController: UIViewController {
                                                                                                  
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        //noteViewModel.deleteAllNotes()
+        
         noteViewModel.getAllNotes()
         
         tableView.rx.setDelegate(self).disposed(by: bag)

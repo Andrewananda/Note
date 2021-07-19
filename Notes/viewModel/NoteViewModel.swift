@@ -49,15 +49,14 @@ class NoteViewModel {
         do {
             let decoder = JSONDecoder()
             decoder.dataDecodingStrategy = .base64
-            let note = try decoder.decode([Note].self, from: data)
-            print("Notes \(note)")
+            let notes = try decoder.decode([Note].self, from: data)
+            setNotes(notes: notes)
         }catch(let error) {
             print("Unable to decode \(error)")
         }
     }
     
     private func setNotes(notes: [Note]) {
-        print("Notes \(notes)")
         noteSubject.accept(notes)
     }
     
